@@ -1,1 +1,1 @@
-# battleship-engine [demo](https://space2pacman-misc.github.io/battleship-engine/index.html)
+# battleship-engine [demo](https://space2pacman-misc.github.io/battleship-engine/)
