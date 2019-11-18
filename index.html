@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Battle ship</title>
+	<meta charset="utf-8">
+	<link rel="stylesheet" type="text/css" href="css/main.css">
+</head>
+<body>
+
+<div class="app"></div>
+
+<script src="js/BattleShipMap.js"></script>
+<script src="js/BattleShipGame.js"></script>
+<script>
+	var map = new BattleShipMap(10, 10);
+	var game = new BattleShipGame(map.getData(), ".app");
+</script>
+</body>
+</html>
