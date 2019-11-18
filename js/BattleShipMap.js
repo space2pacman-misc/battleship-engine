@@ -72,17 +72,10 @@ class BattleShipMap {
 	}
 
 	_checkPaths(points, shipLength) {
-		var coordinates;
-
-		for(var i = 0; i < points.length; i++) {
-			coordinates = this._checkPath(points, i, shipLength);
+		var direction = Math.floor(Math.random() * 2);
+		var coordinates = this._checkPath(points, direction, shipLength);
 			
-			if(coordinates) {
-				return coordinates;
-			}
-		}
-
-		return false;
+		return coordinates ? coordinates : false;
 	}
 
 	_checkPath(points, index, shipLength) {
