@@ -21,4 +21,30 @@ body {
     background: black;
     border: 2px solid #00f;
     background: rgba(0,0,255,.05);
+    position: relative;
+    overflow: hidden;
+}
+
+.destroyed {
+   border-color: red;
+}
+
+.destroyed:before, .destroyed:after {
+    content: "";
+    display: block;
+    height: 2px;
+    width: 200%;
+    background: red;
+    position: absolute;
+    left: -20px;
+    top: 25px;
+}
+
+.destroyed:before {
+    transform: rotate(45deg);
+}
+
+.destroyed:after {
+    transform: rotate(-45deg);
+    left: -25px;
 }

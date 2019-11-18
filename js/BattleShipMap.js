@@ -1,10 +1,10 @@
 class BattleShipMap {
 	constructor(width, height) {
-		/*
-		0 - empty
-		1 - ship
-		2 - space
-		*/
+		this._CELL_TYPES = {
+			EMPTY: 0,
+			SHIP: 1,
+			SPACE: 2
+		}
 		this._width = width;
 		this._height = height;
 		this._map = null;
@@ -32,7 +32,7 @@ class BattleShipMap {
 	}
 
 	_checkPoints(i, j) {
-		return this._map[i][j] === 0 ? true : false;
+		return this._map[i][j] === this._CELL_TYPES.EMPTY ? true : false;
 	}
 
 	_setDisposition() {
@@ -49,7 +49,7 @@ class BattleShipMap {
 			for(var j = 0; j < coordinates.length; j++) {
 				var [x, y] = coordinates[j];
 
-				this._map[x][y] = 1;
+				this._map[x][y] = this._CELL_TYPES.SHIP;
 			}
 			
 			this._setSpace(coordinates);
@@ -60,14 +60,14 @@ class BattleShipMap {
 		for(var i = 0; i < coordinates.length; i++) {
 			var [x, y] = coordinates[i];
 
-			if(this._map[x - 1] && this._map[x - 1][y - 1] === 0) this._map[x - 1][y - 1] = 2;
-			if(this._map[x - 1] && this._map[x - 1][y] === 0) this._map[x - 1][y] = 2;
-			if(this._map[x - 1] && this._map[x - 1][y + 1] === 0) this._map[x - 1][y + 1] = 2;
-			if(this._map[x][y - 1] === 0) this._map[x][y - 1] = 2;
-			if(this._map[x][y + 1] === 0) this._map[x][y + 1] = 2;
-			if(this._map[x + 1] && this._map[x + 1][y - 1] === 0) this._map[x + 1][y - 1] = 2;
-			if(this._map[x + 1] && this._map[x + 1][y] === 0) this._map[x + 1][y] = 2;
-			if(this._map[x + 1] && this._map[x + 1][y + 1] === 0) this._map[x + 1][y + 1] = 2;
+			if(this._map[x - 1] && this._map[x - 1][y - 1] === this._CELL_TYPES.EMPTY) this._map[x - 1][y - 1] = this._CELL_TYPES.SPACE;
+			if(this._map[x - 1] && this._map[x - 1][y] === this._CELL_TYPES.EMPTY) this._map[x - 1][y] = this._CELL_TYPES.SPACE;
+			if(this._map[x - 1] && this._map[x - 1][y + 1] === this._CELL_TYPES.EMPTY) this._map[x - 1][y + 1] = this._CELL_TYPES.SPACE;
+			if(this._map[x][y - 1] === this._CELL_TYPES.EMPTY) this._map[x][y - 1] = this._CELL_TYPES.SPACE;
+			if(this._map[x][y + 1] === this._CELL_TYPES.EMPTY) this._map[x][y + 1] = this._CELL_TYPES.SPACE;
+			if(this._map[x + 1] && this._map[x + 1][y - 1] === this._CELL_TYPES.EMPTY) this._map[x + 1][y - 1] = this._CELL_TYPES.SPACE;
+			if(this._map[x + 1] && this._map[x + 1][y] === this._CELL_TYPES.EMPTY) this._map[x + 1][y] = this._CELL_TYPES.SPACE;
+			if(this._map[x + 1] && this._map[x + 1][y + 1] === this._CELL_TYPES.EMPTY) this._map[x + 1][y + 1] = this._CELL_TYPES.SPACE;
 		}
 	}
 
@@ -92,7 +92,7 @@ class BattleShipMap {
 			pointsClone[index] = pointsClone[index] + delta;
 			var [x, y] = pointsClone;
 
-			if(this._map[x] && this._map[x][y] === 0) {
+			if(this._map[x] && this._map[x][y] === this._CELL_TYPES.EMPTY) {
 				count++;
 				coordinates.push(pointsClone.slice());
 

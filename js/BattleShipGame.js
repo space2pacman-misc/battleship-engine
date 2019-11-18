@@ -1,28 +1,52 @@
 class BattleShipGame {
 	constructor(map, app) {
+		this._CELL_TYPES = {
+			EMPTY: 0,
+			SHIP: 1,
+			SPACE: 2,
+			DESTROYED: 3
+		}
 		this._map = map;
 		this._app = document.querySelector(app);
 		this._init();
+	}
+
+	strike(i, j) {
+		this._map[i][j] = this._CELL_TYPES.DESTROYED;
+		this._update();
+	}
+
+	_update() {
+		this._app.innerHTML = "";
+		this._render();
 	}
 
 	_render() {
 		for(var i = 0; i < this._map.length; i++) {
 			for(var j = 0; j < this._map[i].length; j++) {
 				switch(this._map[i][j]) {
-					case 0:
+					case this._CELL_TYPES.EMPTY:
 						var cell = this._createCell("water");
 
 						break;
-					case 1:
+					case this._CELL_TYPES.SHIP:
 						var cell = this._createCell("ship");
 
 						break;
-					case 2:
+					case this._CELL_TYPES.SPACE:
 						var cell = this._createCell("space");
+
+						break;
+					case this._CELL_TYPES.DESTROYED:
+						var cell = this._createCell("ship");
+
+						cell.classList.add("destroyed");
 
 						break;
 				}
 
+				cell.setAttribute("i", i);
+				cell.setAttribute("j", j);
 				this._app.appendChild(cell);
 			}
 		}

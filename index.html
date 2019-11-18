@@ -14,6 +14,16 @@
 <script>
 	var map = new BattleShipMap(10, 10);
 	var game = new BattleShipGame(map.getData(), ".app");
+	var app = document.querySelector(".app");
+
+	app.addEventListener("click", handler);
+
+	function handler(e) {
+		var i = +e.target.getAttribute("i");
+		var j = +e.target.getAttribute("j");
+
+		game.strike(i, j)
+	}
 </script>
 </body>
 </html>
