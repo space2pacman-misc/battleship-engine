@@ -15,13 +15,13 @@ body {
     height: 50px;
     border: 1px solid #b4b4ff;
     box-sizing: border-box;
+    position: relative;
 }
 
 .ship {
     background: black;
     border: 2px solid #00f;
     background: rgba(0,0,255,.05);
-    position: relative;
     overflow: hidden;
 }
 
@@ -47,4 +47,22 @@ body {
 .destroyed:after {
     transform: rotate(-45deg);
     left: -25px;
+}
+
+.miss {
+    background: #f2f4f8;
+}
+
+.miss:after {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    height: 4px;
+    width: 4px;
+    background: #333;
+    border-radius: 50%;
+    margin-top: -2px;
+    margin-left: -2px;
 }

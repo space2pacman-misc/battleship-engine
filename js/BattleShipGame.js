@@ -4,7 +4,8 @@ class BattleShipGame {
 			EMPTY: 0,
 			SHIP: 1,
 			SPACE: 2,
-			DESTROYED: 3
+			DESTROYED: 3,
+			MISS: 4
 		}
 		this._map = map;
 		this._app = document.querySelector(app);
@@ -12,8 +13,12 @@ class BattleShipGame {
 	}
 
 	strike(i, j) {
-		this._map[i][j] = this._CELL_TYPES.DESTROYED;
+		this._map[i][j] = this._checkPoints(i, j);
 		this._update();
+	}
+
+	_checkPoints(i, j) {
+		return this._map[i][j] === this._CELL_TYPES.SHIP ? this._CELL_TYPES.DESTROYED : this._CELL_TYPES.MISS;
 	}
 
 	_update() {
@@ -41,6 +46,10 @@ class BattleShipGame {
 						var cell = this._createCell("ship");
 
 						cell.classList.add("destroyed");
+
+						break;
+					case this._CELL_TYPES.MISS:
+						var cell = this._createCell("miss");
 
 						break;
 				}
