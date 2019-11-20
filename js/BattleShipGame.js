@@ -62,14 +62,14 @@ class BattleShipGame {
 		for(var i = 0; i < coordinates.length; i++) {
 			var [x, y] = coordinates[i];
 
-			if(map[x - 1] && map[x - 1][y - 1] === EMPTY || map[x - 1][y - 1] === SPACE) map[x - 1][y - 1] = MISS;
-			if(map[x - 1] && map[x - 1][y] === EMPTY || map[x - 1][y] === SPACE) map[x - 1][y] = MISS;
-			if(map[x - 1] && map[x - 1][y + 1] === EMPTY || map[x - 1][y + 1] === SPACE) map[x - 1][y + 1] = MISS;
+			if(map[x - 1] && (map[x - 1][y - 1] === EMPTY || map[x - 1][y - 1] === SPACE)) map[x - 1][y - 1] = MISS;
+			if(map[x - 1] && (map[x - 1][y] === EMPTY || map[x - 1][y] === SPACE)) map[x - 1][y] = MISS;
+			if(map[x - 1] && (map[x - 1][y + 1] === EMPTY || map[x - 1][y + 1] === SPACE)) map[x - 1][y + 1] = MISS;
 			if(map[x][y - 1] === EMPTY || map[x][y - 1] === SPACE) map[x][y - 1] = MISS;
 			if(map[x][y + 1] === EMPTY || map[x][y + 1] === SPACE) map[x][y + 1] = MISS;
-			if(map[x + 1] && map[x + 1][y - 1] === EMPTY || map[x + 1][y - 1] === SPACE) map[x + 1][y - 1] = MISS;
-			if(map[x + 1] && map[x + 1][y] === EMPTY || map[x + 1][y] === SPACE) map[x + 1][y] = MISS;
-			if(map[x + 1] && map[x + 1][y + 1] === EMPTY || map[x + 1][y + 1] === SPACE) map[x + 1][y + 1] = MISS;
+			if(map[x + 1] && (map[x + 1][y - 1] === EMPTY || map[x + 1][y - 1] === SPACE)) map[x + 1][y - 1] = MISS;
+			if(map[x + 1] && (map[x + 1][y] === EMPTY || map[x + 1][y] === SPACE)) map[x + 1][y] = MISS;
+			if(map[x + 1] && (map[x + 1][y + 1] === EMPTY || map[x + 1][y + 1] === SPACE)) map[x + 1][y + 1] = MISS;
 		}
 	}
 
