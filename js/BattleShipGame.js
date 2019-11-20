@@ -18,11 +18,17 @@ class BattleShipGame {
 
 		if(cellType === this._CELL_TYPES.SHIP) {
 			this._findShip([i, j]);
-			cellType = this._CELL_TYPES.DESTROYED;
+			this._map[i][j] = this._CELL_TYPES.DESTROYED;
+			this._update();
+
+			return true;
+		} else {
+			this._map[i][j] = cellType;
+			this._update();
+
+			return false;
 		}
 
-		this._map[i][j] = cellType;
-		this._update();
 	}
 
 	_findShip(position) {

@@ -19,10 +19,11 @@
 	app.addEventListener("click", handler);
 
 	function handler(e) {
-		var i = +e.target.getAttribute("i");
-		var j = +e.target.getAttribute("j");
-
-		game.strike(i, j)
+		if(e.target.classList.contains("cell")) {
+			var i = +e.target.getAttribute("i");
+			var j = +e.target.getAttribute("j");
+			var result = game.strike(i, j);
+		}
 	}
 </script>
 </body>
