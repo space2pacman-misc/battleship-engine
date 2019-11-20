@@ -8,12 +8,20 @@ class BattleShipMap {
 		this._width = width;
 		this._height = height;
 		this._map = null;
-		this._ships = [4, 3, 3, 2, 2, 2, 1, 1, 1, 1];
+		this._ships = {
+			types: [4, 3, 3, 2, 2, 2, 1, 1, 1, 1],
+			coordinates: [],
+			states: []
+		};
 		this._init();
 	}
 
-	getData() {
+	getMap() {
 		return this._map;
+	}
+
+	getShips() {
+		return this._ships;
 	}
 
 	_create() {
@@ -36,8 +44,8 @@ class BattleShipMap {
 	}
 
 	_setDisposition() {
-		for(var i = 0; i < this._ships.length; i++) {
-			var ship = this._ships[i];
+		for(var i = 0; i < this._ships.types.length; i++) {
+			var ship = this._ships.types[i];
 			var points = this._getPoints();
 			var coordinates = this._checkPaths(points, ship);
 
@@ -53,21 +61,35 @@ class BattleShipMap {
 			}
 			
 			this._setSpace(coordinates);
+			this._setCoordinates(coordinates);
+			this._setStates(ship)
 		}
 	}
 
+	_setCoordinates(coordinates) {
+		this._ships.coordinates.push(coordinates);
+	}
+
+	_setStates(ship) {
+		this._ships.states.push(Array.from(Array(ship).fill(true)))
+	}
+
 	_setSpace(coordinates) {
+		var map = this._map;
+		var EMPTY = this._CELL_TYPES.EMPTY;
+		var SPACE = this._CELL_TYPES.SPACE;
+
 		for(var i = 0; i < coordinates.length; i++) {
 			var [x, y] = coordinates[i];
 
-			if(this._map[x - 1] && this._map[x - 1][y - 1] === this._CELL_TYPES.EMPTY) this._map[x - 1][y - 1] = this._CELL_TYPES.SPACE;
-			if(this._map[x - 1] && this._map[x - 1][y] === this._CELL_TYPES.EMPTY) this._map[x - 1][y] = this._CELL_TYPES.SPACE;
-			if(this._map[x - 1] && this._map[x - 1][y + 1] === this._CELL_TYPES.EMPTY) this._map[x - 1][y + 1] = this._CELL_TYPES.SPACE;
-			if(this._map[x][y - 1] === this._CELL_TYPES.EMPTY) this._map[x][y - 1] = this._CELL_TYPES.SPACE;
-			if(this._map[x][y + 1] === this._CELL_TYPES.EMPTY) this._map[x][y + 1] = this._CELL_TYPES.SPACE;
-			if(this._map[x + 1] && this._map[x + 1][y - 1] === this._CELL_TYPES.EMPTY) this._map[x + 1][y - 1] = this._CELL_TYPES.SPACE;
-			if(this._map[x + 1] && this._map[x + 1][y] === this._CELL_TYPES.EMPTY) this._map[x + 1][y] = this._CELL_TYPES.SPACE;
-			if(this._map[x + 1] && this._map[x + 1][y + 1] === this._CELL_TYPES.EMPTY) this._map[x + 1][y + 1] = this._CELL_TYPES.SPACE;
+			if(map[x - 1] && map[x - 1][y - 1] === EMPTY) map[x - 1][y - 1] = SPACE;
+			if(map[x - 1] && map[x - 1][y] === EMPTY) map[x - 1][y] = SPACE;
+			if(map[x - 1] && map[x - 1][y + 1] === EMPTY) map[x - 1][y + 1] = SPACE;
+			if(map[x][y - 1] === EMPTY) map[x][y - 1] = SPACE;
+			if(map[x][y + 1] === EMPTY) map[x][y + 1] = SPACE;
+			if(map[x + 1] && map[x + 1][y - 1] === EMPTY) map[x + 1][y - 1] = SPACE;
+			if(map[x + 1] && map[x + 1][y] === EMPTY) map[x + 1][y] = SPACE;
+			if(map[x + 1] && map[x + 1][y + 1] === EMPTY) map[x + 1][y + 1] = SPACE;
 		}
 	}
 

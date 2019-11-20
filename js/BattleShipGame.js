@@ -1,5 +1,5 @@
 class BattleShipGame {
-	constructor(map, app) {
+	constructor(map, ships, app) {
 		this._CELL_TYPES = {
 			EMPTY: 0,
 			SHIP: 1,
@@ -8,17 +8,82 @@ class BattleShipGame {
 			MISS: 4
 		}
 		this._map = map;
+		this._ships = ships;
 		this._app = document.querySelector(app);
 		this._init();
 	}
 
 	strike(i, j) {
-		this._map[i][j] = this._checkPoints(i, j);
+		var cellType = this._checkPoints(i, j);
+
+		if(cellType === this._CELL_TYPES.SHIP) {
+			this._findShip([i, j]);
+			cellType = this._CELL_TYPES.DESTROYED;
+		}
+
+		this._map[i][j] = cellType;
 		this._update();
 	}
 
+	_findShip(position) {
+		var coordinates = this._ships.coordinates;
+
+		for(var i = 0; i < coordinates.length; i++) {
+			for(var j = 0; j < coordinates[i].length; j++) {
+				if(JSON.stringify(coordinates[i][j]) === JSON.stringify(position)) {
+					this._updateState(i, j);
+				}
+			}
+		}
+	}
+
+	_updateState(i, j) {
+		this._ships.states[i][j] = false;
+		this._watchState();
+	}
+
+	_watchState() {
+		var states = this._ships.states;
+		var coordinates = this._ships.coordinates;
+
+		for(var i = 0; i < states.length; i++) {
+			if(states[i].every(state => !state)) {
+				this._setSpace(coordinates[i]);
+			}
+		}
+	}
+
+	_setSpace(coordinates) {
+		var map = this._map;
+		var EMPTY = this._CELL_TYPES.EMPTY;
+		var SPACE = this._CELL_TYPES.SPACE;
+		var MISS = this._CELL_TYPES.MISS;
+
+		for(var i = 0; i < coordinates.length; i++) {
+			var [x, y] = coordinates[i];
+
+			if(map[x - 1] && map[x - 1][y - 1] === EMPTY || map[x - 1][y - 1] === SPACE) map[x - 1][y - 1] = MISS;
+			if(map[x - 1] && map[x - 1][y] === EMPTY || map[x - 1][y] === SPACE) map[x - 1][y] = MISS;
+			if(map[x - 1] && map[x - 1][y + 1] === EMPTY || map[x - 1][y + 1] === SPACE) map[x - 1][y + 1] = MISS;
+			if(map[x][y - 1] === EMPTY || map[x][y - 1] === SPACE) map[x][y - 1] = MISS;
+			if(map[x][y + 1] === EMPTY || map[x][y + 1] === SPACE) map[x][y + 1] = MISS;
+			if(map[x + 1] && map[x + 1][y - 1] === EMPTY || map[x + 1][y - 1] === SPACE) map[x + 1][y - 1] = MISS;
+			if(map[x + 1] && map[x + 1][y] === EMPTY || map[x + 1][y] === SPACE) map[x + 1][y] = MISS;
+			if(map[x + 1] && map[x + 1][y + 1] === EMPTY || map[x + 1][y + 1] === SPACE) map[x + 1][y + 1] = MISS;
+		}
+	}
+
 	_checkPoints(i, j) {
-		return this._map[i][j] === this._CELL_TYPES.SHIP ? this._CELL_TYPES.DESTROYED : this._CELL_TYPES.MISS;
+		switch(this._map[i][j]) {
+			case this._CELL_TYPES.SHIP:
+				return this._CELL_TYPES.SHIP;
+
+			case this._CELL_TYPES.DESTROYED:
+				return this._CELL_TYPES.DESTROYED;
+
+			default:
+				return this._CELL_TYPES.MISS;
+		}
 	}
 
 	_update() {

@@ -13,7 +13,7 @@
 <script src="js/BattleShipGame.js"></script>
 <script>
 	var map = new BattleShipMap(10, 10);
-	var game = new BattleShipGame(map.getData(), ".app");
+	var game = new BattleShipGame(map.getMap(), map.getShips(), ".app");
 	var app = document.querySelector(".app");
 
 	app.addEventListener("click", handler);
